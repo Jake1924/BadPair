@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BadPair</string>
+    <string name="shuffle">shuffle</string>
+    <string name="nameofplayers">NameOfplayers</string>
+</resources>
