@@ -1,19 +1,15 @@
 package com.example.badpair;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textview = findViewById(R.id.team);
         Button shuffle = findViewById(R.id.button);
         Button add = findViewById(R.id.add_button);
+        Button del = findViewById(R.id.delete_button);
 
         textview.setMovementMethod(new ScrollingMovementMethod());
 
@@ -36,12 +33,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String s = editText.getText().toString();
-                if(s.isEmpty()) {
+                if (s.isEmpty()) {
                     textview.setText("");
                     shuffle.setVisibility(View.GONE);
-                    Toast.makeText(MainActivity.this,"No player names has been entered",Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    Toast.makeText(MainActivity.this, "No player names has been entered", Toast.LENGTH_SHORT).show();
+                } else {
 
                     model.setCurrentName(s);
                     model.loadplayers();
@@ -50,15 +46,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         shuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    model.loadplayers();
+                model.loadplayers();
             }
         });
 
-        model.getRandomName().observe(this,randomName ->{
+        model.getRandomName().observe(this, randomName -> {
             textview.setText(model.getRandomName().getValue());
+        });
+
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                model.delete();
+                Toast.makeText(MainActivity.this, "all player name cleared", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -27,7 +27,6 @@ public abstract class PlayerDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             PlayerDatabase.class, "player_database")
-//                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
@@ -35,25 +34,6 @@ public abstract class PlayerDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-//    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-//        @Override
-//        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-//            super.onCreate(db);
-//
-//            databaseWriteExecutor.execute(() -> {
-//
-//                // Populate the database in the background.
-//                // If you want to start with more words, just add them.
-//                PlayerDao dao = INSTANCE.playerDao();
-//                dao.deleteAll();
-//
-////                PlayerName name = new PlayerName("Jake_1924");
-////                dao.insert(name);
-////                name = new PlayerName("World");
-////                dao.insert(name);
-//
-//            });
-//        }
-//    };
+
 
 }

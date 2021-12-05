@@ -35,7 +35,11 @@ class PlayerRepositry {
         PlayerDatabase.databaseWriteExecutor.execute(() -> {
             mPlayerDao.insert(word);
         });
-
+    }
+    void delete(){
+          PlayerDatabase.databaseWriteExecutor.execute(() ->{
+              mPlayerDao.deleteAll();
+          });
     }
 
 }

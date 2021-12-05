@@ -47,8 +47,6 @@ public class mViewModel extends ViewModel {
         for (String a : ar) {
             i++;
             tmp.append(i).append(". ").append(a).append("\n");
-//            Log.v("Players",i+"."+a+"\n");
-//            randomName.setValue( i + ". " + a + "\n");
         }
         randomName.setValue(tmp.toString());
     }
@@ -71,7 +69,10 @@ public class mViewModel extends ViewModel {
 
 
     }
-
+    public  void delete(){
+        mRepository = new PlayerRepositry(application);
+        mRepository.delete();
+    }
 
     private void shuffleArray() {
         split();
