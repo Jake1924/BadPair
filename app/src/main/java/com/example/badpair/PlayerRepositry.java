@@ -3,15 +3,15 @@ package com.example.badpair;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class PlayerRepositry {
 
 
-    private PlayerDao mPlayerDao;
-    private LiveData<List<PlayerName>> mAllPlayer;
+    private final PlayerDao mPlayerDao;
+    private  List<PlayerName> mAllPlayer;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -20,12 +20,15 @@ class PlayerRepositry {
       PlayerRepositry(Application application) {
         PlayerDatabase db = PlayerDatabase.getDatabase(application);
         mPlayerDao = db.playerDao();
-        mAllPlayer = mPlayerDao.getAlphabetizedWords();
+//        mAllPlayer = mPlayerDao.getAlphabetizedWords();  // Todo: this cannot be done in mainthread
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<PlayerName>> getAllPlayer() {
+    List<PlayerName> getAllPlayer(){
+        PlayerDatabase.databaseWriteExecutor.execute(() -> {
+            mAllPlayer = mPlayerDao.getAlphabetizedWords();
+        });
         return mAllPlayer;
     }
 
@@ -36,10 +39,9 @@ class PlayerRepositry {
             mPlayerDao.insert(word);
         });
     }
+
     void delete(){
-          PlayerDatabase.databaseWriteExecutor.execute(() ->{
-              mPlayerDao.deleteAll();
-          });
+          PlayerDatabase.databaseWriteExecutor.execute(mPlayerDao::deleteAll);
     }
 
 }

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewModel model = new ViewModelProvider(this, new mViewModelFactory(getApplication())).get(mViewModel.class);
+        mViewModel model = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(mViewModel.class);
 
         EditText editText = findViewById(R.id.EditText);
         TextView textview = findViewById(R.id.team);
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         textview.setMovementMethod(new ScrollingMovementMethod());
 
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,13 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 String s = editText.getText().toString();
                 if (s.isEmpty()) {
                     textview.setText("");
-                    shuffle.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "No player names has been entered", Toast.LENGTH_SHORT).show();
                 } else {
-
                     model.setCurrentName(s);
-                    model.loadplayers();
-                    shuffle.setVisibility(View.VISIBLE);
                 }
 
             }

@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -20,6 +22,6 @@ public interface PlayerDao {
     void deleteAll();
 
     @Query("SELECT * FROM player_table ORDER BY name ASC")
-    LiveData<List<PlayerName>> getAlphabetizedWords();
+    List<PlayerName> getAlphabetizedWords();
 }
 

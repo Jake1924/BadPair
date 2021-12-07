@@ -27,6 +27,7 @@ public abstract class PlayerDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             PlayerDatabase.class, "player_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
